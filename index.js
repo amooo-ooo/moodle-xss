@@ -4,15 +4,15 @@ alert('XSS achieved!!! :3 ~ wntiv_, 162.159.137.232, amsaynz');
 (function(){
   if(new URLSearchParams(window.location.search).get('id') !== '219026') return;
 
-  const el = document.getElementById('map');
+  const el = document.currentScript.parentElement;
 
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = 'https://unpkg.com/leaflet/dist/leaflet.css';
+  link.href = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css';
   document.head.appendChild(link);
 
   const script = document.createElement('script');
-  script.src = 'https://unpkg.com/leaflet/dist/leaflet.js';
+  script.src = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js';
   script.onload = () => {
     const showMap = (lat, lon, label) => {
       const map = L.map(el).setView([lat, lon], 13);
